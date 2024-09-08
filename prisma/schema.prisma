@@ -1,0 +1,238 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  Person_ID                   Int                  @id @default(autoincrement())
+  First_Name                  String
+  Last_Name                   String
+  Email                       String               @unique          
+  Password                    String
+  Organization_ID             Int?                          
+  Status                      String
+  Website_URL                 String?
+  Logo_URL                    String?
+  Address1_Mailing            String?
+  Address2_Mailing            String?
+  City_Mailing                String?
+  State_Mailing               String?
+  Zip_Mailing                 String?
+  Address1_Physical           String?
+  Address2_Physical           String?
+  City_Physical               String?
+  State_Physical              String?
+  Zip_Physical                String?
+  Company_Profile             String?
+  Internal_Notes              String?
+  Owner_ID                    Int?                  
+  Primary_Contact_ID          Int?                  
+  Accounting_ID               Int?                 
+  Client_ID                   Int?                   
+  Number_of_Employees         Int?
+  Number_of_Contractors       Int?
+  Created_Date                DateTime?              
+  Created_By                  Int?                   
+  Updated_Date                DateTime?
+  Updated_By                  Int?                 
+}
+
+model Client {
+  Client_ID                   Int                   @id @default(autoincrement())
+  Client_Name                 String
+  Owner_ID                    Int?                  
+  Primary_Contact_ID          Int?               
+  Accounting_ID               Int?                
+  Number_of_Employees         Int?
+  Organization_ID             Int?                
+  Created_Date                DateTime?
+  Created_By                  Int?                   
+  Updated_Date                DateTime?
+  Updated_By                  Int?                   
+  Person_ID                   Int?                  
+}
+
+model Owner {
+  Owner_ID                    Int                   @id @default(autoincrement())
+  Owner_Name                  String
+  Created_Date                DateTime?
+  Created_By                  Int?                  
+  Updated_Date                DateTime?
+  Updated_By                  Int?                  
+  Person_ID                   Int?                   
+  Client_ID                   Int?                   
+}
+
+model Primary_Contact {
+  Primary_Contact_ID          Int                    @id @default(autoincrement())
+  Primary_Contact_Name        String
+  Created_Date                DateTime?
+  Created_By                  Int?                    
+  Updated_Date                DateTime?
+  Updated_By                  Int?                    
+  Person_ID                   Int?                   
+  Client_ID                   Int?                    
+}
+
+model Accounting {
+  Accounting_ID               Int                   @id @default(autoincrement())
+  Accounting_Name             String
+  Created_Date                DateTime?
+  Created_By                  Int?                  
+  Updated_Date                DateTime?
+  Updated_By                  Int?                  
+  EIN                         String
+  State_Tax_ID                String
+  Person_ID                   Int?                   
+  Client_ID                   Int?                   
+}
+
+model Organization {
+  Organization_ID             Int                   @id @default(autoincrement())
+  Organization_Name           String
+  Organization_Type           String
+  Created_Date                DateTime?
+  Created_By                  Int?                   
+  Updated_Date                DateTime?
+  Updated_By                  Int?                   
+  Person_ID                   Int?                   
+  Client_ID                   Int?                   
+}
+
+model Project {
+  Project_ID                  Int                   @id @default(autoincrement())
+  Project_Name                String
+  Project_Description         String
+  Project_Status              String
+  Template_ID                 Int?                   
+  Client_ID                   Int                
+  Project_Completed_Date      DateTime?
+  Project_Due_Date            DateTime
+  Project_Hours_Completed     Float?
+  Total_Nonbillable           Float?
+  Total_Billable              Float?
+  Created_Date                DateTime?
+  Created_By                  Int?                
+  Updated_Date                DateTime?
+  Updated_By                  Int?                  
+  Organization_ID             Int? 
+}
+
+model Project_Comment {
+  Project_Comment_ID          Int                   @id @default(autoincrement())
+  Project_ID                  Int
+  Comment                     String
+  Created_Date                DateTime
+  Created_By                  Int                
+  Updated_Date                DateTime
+  Updated_By                  Int                 
+}
+
+model Task  {
+  Task_ID                     Int                   @id @default(autoincrement())
+  Project_ID                  Int
+  Task_Name                   String
+  Task_Description            String
+  Task_Status_Label           String
+  Task_Started_Date           DateTime?
+  Task_Completed_Date         DateTime?
+  Task_Due_Date               DateTime
+  Task_Hours_Completed        Float?
+  Task_Hidden_From_Client     String?
+  Task_Priority               String?
+  Total_Nonbillable           Float?
+  Total_Billable              Float?
+  Person_Assigned_To_ID       Int?
+  Task_Assigned_To_Name       String?
+  Created_Date                DateTime?
+  Created_By                  Int?                  
+  Updated_Date                DateTime?
+  Updated_By                  Int?
+  time_entries                Time_Entry[]          @relation(name: "TasktoTimeEntry")
+}
+
+model Task_Comment {
+  Task_Comment_ID             Int                   @id @default(autoincrement())
+  Task_ID                     Int
+  Comment                     String
+  Created_Date                DateTime
+  Created_By                  Int                  
+  Updated_Date                DateTime
+  Updated_By                  Int                   
+}
+
+model Subtask {
+  Subtask_ID                  Int                   @id @default(autoincrement())
+  Subtask_Name                String
+  Subtask_Description         String
+  Subtask_Status_Label        String
+  Subtask_Started_Date        DateTime
+  Subtask_Completed_Date      DateTime
+  Subtask_Due_Date            DateTime
+  Subtask_Hours_Completed     Float
+  Subtask_Hidden_From_Client  Boolean
+  Subtask_Priority            String
+  Total_Nonbillable           Float
+  Total_Billable              Float
+  Person_Assigned_To_ID       Int
+  Person_Assigned_To_Name     String
+  Created_Date                DateTime
+  Created_By                  Int                   
+  Updated_Date                DateTime
+  Updated_By                  Int                   
+}
+
+model Subtask_Comment {
+  Subtask_Comment_ID          Int                   @id @default(autoincrement())
+  Subtask_ID                  Int
+  Comment                     String
+  Created_Date                DateTime
+  Created_By                  Int                  
+  Updated_Date                DateTime
+  Updated_By                  Int                
+}
+
+model Time_Entry {
+  Time_Entry_ID               Int                   @id @default(autoincrement())
+  Description                 String?
+  Project_ID                  Int                   
+  Task_ID                     Int
+  task                        Task                 @relation(name: "TasktoTimeEntry", fields: [Task_ID], references: [Task_ID], onUpdate: Cascade)
+  Subtask_ID                  Int?                 
+  Person_ID                   Int?                   
+  Person_Name                 String?
+  Start_Date_Time             DateTime?
+  End_Date_Time               DateTime?
+  Minutes                     Int?
+  Day_Of_Week_Date            DateTime?
+  Day_Of_Week_Name            String?
+  Cookie_ID                   Int?
+  Total_Hours                 Float?
+  Billing_Type                String?
+  Billing_Status              String?
+  Hourly_Billing_Rate         Float?
+  Total_to_Bill               Float?
+  Internal_Notes              String?
+  Created_By                  Int?                
+  Updated_Date                DateTime?
+  Updated_By                  Int?                
+}
+
+model Invoice {
+  Invoice_ID               Int                   @id @default(autoincrement())
+  Organization_ID          Int             
+  Client_ID                Int                   
+  Total_Billed             Float                
+  Total_Hours              Float
+}

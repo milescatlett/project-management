@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "Client" ALTER COLUMN "Owner_ID" DROP NOT NULL,
+ALTER COLUMN "Primary_Contact_ID" DROP NOT NULL,
+ALTER COLUMN "Accounting_ID" DROP NOT NULL,
+ALTER COLUMN "Number_of_Employees" DROP NOT NULL,
+ALTER COLUMN "Organization_ID" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Primary_Contact" ALTER COLUMN "Client_ID" DROP NOT NULL;

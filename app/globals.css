@@ -1,0 +1,53 @@
+
+.text-form {
+    margin: 10px;
+    width: 100%;
+}
+
+.button-form {
+    margin: 10px;
+    width: 200px;
+}
+
+.full-width {
+    width: 97%;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: rgb(59, 59, 59);
+    padding: 5px;
+}
+.side-bar {
+    backdrop-filter: blur(24px);
+    border: 1px solid rgb(218, 218, 218);
+    box-shadow: 0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15);
+    border-radius: 5px;
+}
+.content-window {
+    backdrop-filter: blur(24px);
+    border: 1px solid rgb(218, 218, 218);
+    box-shadow: 0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.switch-options {
+    padding: 7px;
+}
+
+.projects-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+a:-webkit-any-link {
+    text-decoration: none;
+    color: rgb(59, 59, 59);
+    cursor: pointer;
+  }
+
+  .task-menu-bar {
+    margin-top: 20px;
+  }
